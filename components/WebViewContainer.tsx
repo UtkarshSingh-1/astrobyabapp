@@ -67,6 +67,8 @@ export default function WebViewContainer({ url }: WebViewContainerProps) {
                 allowsBackForwardNavigationGestures={true}
                 pullToRefreshEnabled={true}
                 mixedContentMode="always"
+                userAgent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+                sharedCookiesEnabled={true}
             />
         </SafeAreaView>
     );
