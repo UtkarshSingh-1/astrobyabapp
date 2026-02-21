@@ -11,6 +11,7 @@ export default function WebViewContainer({ url }: WebViewContainerProps) {
     const webviewRef = useRef<WebView>(null);
     const [loading, setLoading] = useState(true);
     const [canGoBack, setCanGoBack] = useState(false);
+    const hasLoadedOnce = useRef(false);
 
     useEffect(() => {
         const backAction = () => {
@@ -41,23 +42,28 @@ export default function WebViewContainer({ url }: WebViewContainerProps) {
                 source={{ uri: url }}
                 style={styles.webview}
                 onLoadStart={(navState) => {
-                    // Only show loading screen when the main URL initially loads.
-                    // Prevent Next.js internal router links or AJAX from triggering the full screen overlay.
-                    if (navState.nativeEvent.url === url) {
+                    // Only show the native loading overlay on the very first load.
+                    // Subsequent internal Next.js navigations (even to root) should use the web app's own loaders.
+                    if (!hasLoadedOnce.current) {
                         setLoading(true);
                     }
                 }}
-                onLoadEnd={() => setLoading(false)}
+                onLoadEnd={() => {
+                    setLoading(false);
+                    hasLoadedOnce.current = true;
+                }}
                 onNavigationStateChange={(navState) => {
                     setCanGoBack(navState.canGoBack);
                 }}
                 onError={(e) => {
                     console.error("WebView Error:", e.nativeEvent)
                     setLoading(false);
+                    hasLoadedOnce.current = true;
                 }}
                 onHttpError={(e) => {
                     console.error("WebView HTTP Error:", e.nativeEvent)
                     setLoading(false);
+                    hasLoadedOnce.current = true;
                 }}
                 startInLoadingState={true}
                 scalesPageToFit={true}
