@@ -59,16 +59,20 @@ export default function WebViewContainer({ url }: WebViewContainerProps) {
                     console.error("WebView HTTP Error:", e.nativeEvent)
                     setLoading(false);
                 }}
-                javaScriptEnabled={true}
-                domStorageEnabled={true}
                 startInLoadingState={true}
                 scalesPageToFit={true}
                 bounces={false}
                 allowsBackForwardNavigationGestures={true}
                 pullToRefreshEnabled={true}
                 mixedContentMode="always"
-                userAgent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+                userAgent="Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36"
+                originWhitelist={['*']}
                 sharedCookiesEnabled={true}
+                cacheEnabled={true}
+                domStorageEnabled={true}
+                javaScriptEnabled={true}
+                allowsInlineMediaPlayback={true}
+                mediaPlaybackRequiresUserAction={false}
             />
         </SafeAreaView>
     );
